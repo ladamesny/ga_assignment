@@ -1,0 +1,26 @@
+#brand {
+  font-weight: bold;
+  font-size: 26px;
+  color: white;
+}
+
+#results {
+  margin-top: 200px;
+}
+
+#poster_img {
+  height:300px;
+  border-radius: 10px;
+}
+.labels {
+  font-weight: bold;
+}
+.movie_content{
+  height:350px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+}
+.info_bits {
+  font-size: 14px;
+}

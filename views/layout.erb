@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/application.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-fixed-top navbar-inverse">
+        <ul class="nav navbar-nav">
+          <li id="brand">Movie Finder</li>
+          <li>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" autofocus=true id="query">
+              </div>
+              <button type="submit" class="btn btn-primary" id="submit_query" >Search</button>
+            </form>
+          </li>
+          <li>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <button type="submit" class="btn btn-warning" action='/favorites' method='get'>See Favorited Movies</button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="results">
+      <%= yield %>
+    </div>
+  </body>
+</html>
