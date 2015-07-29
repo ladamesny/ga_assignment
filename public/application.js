@@ -14,8 +14,8 @@ $(document).ready(function(){
         if(key == "Poster") {
           var image = "<div class='row movie_content'><div class='col-md-3'><img src='"+ val + "' id='poster_img'/></div>";
         } else if (key == "Title"){
-          var encodedParam = '/favorites/?name='+keyword+'&oid=1';
-          title = "<div class='row'><h1 id='" + key + "'>"+ val + "</h1><form action='"+encodedParam+"' method='post'><button type='submit' class='btn btn-small btn-danger'>Favorite</button></form></div>";
+          var encodedParam = '/favorites/?name='+keyword+'&oid='+data.imdbID;
+          title = "<div class='row'><h1 id='" + key + "'>"+ val + "</h1><form action='"+encodedParam+"' method='post'><button type='submit' class='btn btn-small btn-danger'>Favorite</button></form></div><hr/>";
         }else if ($.inArray(key, turn_off_labels) == -1 ){
           items.push( "<div class='col-md-3 info_bits' id='" + key + "'><span class='labels'>" +key+":</span> "+ val + "</div>" );
         }
