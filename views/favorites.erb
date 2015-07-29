@@ -1,0 +1,27 @@
+<div class="container-fluid" id="place_holder">
+  <% if @favorite_movies.nil? %>
+    <p>You have no favorite movies tagged.</p>
+  <% else %>
+    <% @favorite_movies.each do |movie| %>
+      <div id="return_result" class=" container">
+        <div class="row">
+          <h1 id="Title"><%=movie["Title"]%></h1>
+        </div>
+        <div class="row movie_content">
+          <div class="col-md-3">
+            <img src=<%=movie["Poster"]%> id='poster_img' />
+          </div>
+          <div class="col-md-3 info_bits" id="Year"><span class="labels">Year:</span> <%=movie["Year"]%></div>
+          <div class="col-md-3 info_bits" id="Rated"><span class="labels">Rated:</span> <%=movie["Rated"]%></div>
+          <div class="col-md-3 info_bits" id="Released"><span class="labels">Released:</span> <%=movie["Released"]%></div>
+          <div class="col-md-3 info_bits" id="Runtime"><span class="labels">Runtime:</span> <%=movie["Runtime"]%></div>
+          <div class="col-md-3 info_bits" id="Director"><span class="labels">Director:</span> <%=movie["Director"]%></div>
+          <div class="col-md-3 info_bits" id="Writer"><span class="labels">Writer:</span>  <%=movie["Writer"]%></div>
+          <div class="col-md-3 info_bits" id="Actors"><span class="labels">Actors:</span>  <%=movie["Actors"]%></div>
+          <div class="col-md-3 info_bits" id="Plot"><span class="labels">Plot:</span> <%=movie["Plot"]%></div>
+          <div class="col-md-3 info_bits" id="Language"><span class="labels">Language:</span>  <%=movie["Language"]%></div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

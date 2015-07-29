@@ -14,7 +14,7 @@ $(document).ready(function(){
         if(key == "Poster") {
           var image = "<div class='row movie_content'><div class='col-md-3'><img src='"+ val + "' id='poster_img'/></div>";
         } else if (key == "Title"){
-          var encodedParam = encode('/favorites/?name='+keyword+'&oid=1');
+          var encodedParam = '/favorites/?name='+keyword+'&oid=1';
           title = "<div class='row'><h1 id='" + key + "'>"+ val + "</h1><form action='"+encodedParam+"' method='post'><button type='submit' class='btn btn-small btn-danger'>Favorite</button></form></div>";
         }else if ($.inArray(key, turn_off_labels) == -1 ){
           items.push( "<div class='col-md-3 info_bits' id='" + key + "'><span class='labels'>" +key+":</span> "+ val + "</div>" );
@@ -35,7 +35,7 @@ $(document).ready(function(){
 
 
 
-// JAVASCRIPT CODE - Couldn't get it to work accurately
+// JAVASCRIPT CODE - Couldn't get it to work properly
 
 // document.addEventListener("DOMContentLoaded", function() {
 //   document.addEventListener('click', function(e) {

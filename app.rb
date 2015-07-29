@@ -1,27 +1,40 @@
 require 'rubygems'
 require 'sinatra'
 require 'json'
+require 'rest_client'
 require "sinatra/reloader" if development?
 
 get '/' do
   erb :index
 end
 
-get '/favorites' do
-  content_type :json
-  response.header['Content-Type'] = 'application/json'
-  File.read('data.json')
+get '/favorites/' do
+  # response.header['Content-Type'] = 'application/json'
+  file = open("data.json")
+  @objects = JSON.parse(file.read)
+  @data_hash =[]
+
+  @objects.each do |movie|
+    movie.each do |record|
+      @data_hash << record[1] if record[0] == 'name'
+    end
+  end
+  @favorite_movies =[]
+  @data_hash.to_json
+  @data_hash.each do |movie_name|
+    api_result = RestClient.get "https://www.omdbapi.com", { :params => {:t => movie_name, :y => nil, :plot => 'short'}, accept: :json}
+    movie_object = JSON.parse(api_result)
+    @favorite_movies << movie_object
+  end
+  erb :favorites
 end
 
-post '/favorites' do
+post '/favorites/' do
   content_type :json
-  file = JSON.parse(File.read('data.json')) rescue ""
+  file = JSON.parse(File.read('data.json')) rescue []
   return 'Invalid Request' unless params[:name] && params[:oid]
-  movie = { name: params[:name], oid: params[:oid] }
-  puts "#{movie}"
-  binding.pry
+  movie = { :name => params[:name], :oid => params[:oid] }
   file << movie
   File.write('data.json',JSON.pretty_generate(file))
-  movie.to_json
-  redirect_to '/'
+  redirect '/favorites/'
 end
