@@ -54,10 +54,10 @@ post '/favorites/' do
   # in the file. If a match is found, the already_a_favorite is then set to true.
   already_a_favorite = false
   file.each do |movie|
-    already_a_favorite = true if movie["name"] == params[:name]
+    already_a_favorite = true if movie["name"] == params[:name].downcase
   end
   # 4) Here we store the movie object only if it's not already a favorite movie
-  file << { :name => params[:name], :oid => params[:oid] } unless already_a_favorite
+  file << { :name => params[:name].downcase, :oid => params[:oid] } unless already_a_favorite
 
   # 5) Here we write the json back to our persistence layer and redirect to the favorites with method of "get"
   File.write('data.json',JSON.pretty_generate(file))
@@ -73,7 +73,7 @@ post '/remove_favorite/' do
   return 'Invalid Request' unless params[:name] && params[:oid]
 
   # 2) This code goes through movie item on the file and deletes the one that matches the 'name' parameter
-  file.delete_if { |movie| movie["name"] == params[:name]}
+  file.delete_if { |movie| movie["name"] == params[:name].downcase}
 
   # 3) Now that the file was changed, we save our changes to the persistence layer, converting our file to a json object
   #    and then we redirect to see an updated favorites list.
