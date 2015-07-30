@@ -1,12 +1,17 @@
 <div class="container-fluid" id="place_holder">
+  <div class="row">
+    <h1>Your Favorite Movies</h1>
+    <hr/>
+  </div>
   <% if @favorite_movies.nil? %>
     <p>You have no favorite movies tagged.</p>
   <% else %>
     <% @favorite_movies.each do |movie| %>
-      <div id="return_result" class=" container">
+      <div class="container return_result">
         <div class="row">
-          <h1 id="Title"><%=movie["Title"]%></h1>
+          <div class="col-md-3"><h1 id="Title"><%=movie["Title"]%></h1></div><div class="col-md-3 favorite_form"><form action="/remove_favorite/?name=<%=movie['Title']%>&oid=<%=movie['imdbID']%>" method='post'><button type='submit' class='btn btn-small btn-danger'>Remove from Favorites</button></form></div>
         </div>
+        <hr/>
         <div class="row movie_content">
           <div class="col-md-3">
             <img src=<%=movie["Poster"]%> id='poster_img' />

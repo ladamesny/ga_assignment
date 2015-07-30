@@ -32,7 +32,6 @@ end
 post '/favorites/' do
   content_type :json
   file = JSON.parse(File.read('data.json')) rescue []
-  puts file.inspect
   return 'Invalid Request' unless params[:name] && params[:oid]
   already_a_favorite = false
   file.each do |movie|
@@ -40,10 +39,18 @@ post '/favorites/' do
       already_a_favorite = true
     end
   end
-  # movie = { :name => params[:name], :oid => params[:oid] }
   if !already_a_favorite
     file << { :name => params[:name], :oid => params[:oid] }
   end
+  File.write('data.json',JSON.pretty_generate(file))
+  redirect '/favorites/'
+end
+
+post '/remove_favorite/' do
+  content_type :json
+  file = JSON.parse(File.read('data.json')) rescue []
+  return 'Invalid Request' unless params[:name] && params[:oid]
+  file.delete_if { |movie| movie["name"] == params[:name]}
   File.write('data.json',JSON.pretty_generate(file))
   redirect '/favorites/'
 end
