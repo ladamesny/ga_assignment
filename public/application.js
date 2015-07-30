@@ -1,15 +1,31 @@
+// Below this code, I have commented out vanilla javascript that I could not get to work for this project.
+// So in an effort to submit a working project, I used jQuery instead to interact with the front end elements.
+
 $(document).ready(function(){
+  // This is the main event handler managing the majority of the front end. Listening for a click of the submit query button
   $("header").on('click', '#submit_query', function(e){
+    // I prevent default behavior of the button and remove introductory text from the DOM
     e.preventDefault();
     $('#place_holder').remove();
-    var query = $('#query').val();
-    var keyword = query.split(" ").join("+");
+
+    // I store the movie title submited by the user, and convert it to a keyword I can use to generate the api url
+    var title = $('#query').val();
+    var keyword = title.split(" ").join("+");
+
+    // Remove previous search results
     $('#results').find('#return_result').remove();
+
+    // Constructs url need to search api for movie title submited by user
     var url = "https://www.omdbapi.com/?t="+keyword+"&y=&plot=short&r=json";
+
+    // This method makes the json api call with the url
     $.getJSON( url, function( data ) {
       var items = [];
       var title;
+      // Created array of information that I don't want to render out to the client. Can add and remove from this list, based on the api documentation.
       var turn_off_labels = ["Genre","Country", "Metascore", 'imdbID', "imdbVotes", "Type", "Response"];
+
+      // Iterates over each json object and create the HTML elements with classes I want to attach back to the DOM
       $.each( data, function( key, val ) {
         if(key == "Poster") {
           var image = "<div class='row movie_content'><div class='col-md-3'><img src='"+ val + "' id='poster_img'/></div>";
@@ -19,23 +35,22 @@ $(document).ready(function(){
         }else if ($.inArray(key, turn_off_labels) == -1 ){
           items.push( "<div class='col-md-3 info_bits' id='" + key + "'><span class='labels'>" +key+":</span> "+ val + "</div>" );
         }
+        // Here I'm putting finishing touches to the DOM element to be rendered.
         items[-1] +='</div>';
         items.unshift(image);
         });
+      // This function actually creates a new div element with an id of "return_result" that I'm appending my movie HTML (stored in "item" variable) to.
+      // Earlier in this handler, I remove "#return_result" to clear the page of previous search results
         $( "<div/>", {
         "id": "return_result", "class" : "container",
         html: title + items.join( "" )
         }).appendTo( "#results" );
     });
-
   })
 });
 
-
-
-
-
 // JAVASCRIPT CODE - Couldn't get it to work properly
+// I was trying a lot of different things. Going to work on refactoring my jQuery to vanilla javascript and see if I can make this work.
 
 // document.addEventListener("DOMContentLoaded", function() {
 //   document.addEventListener('click', function(e) {
